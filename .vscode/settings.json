@@ -1,0 +1,9 @@
+{
+    "eslint.format.enable": true,
+    "eslint.enable": false,
+    "flow.enabled": true,
+    "flow.useNPMPackagedFlow": true,
+    "typescript.format.enable": false,
+    "javascript.format.enable": true,
+    "javascript.validate.enable": false
+}

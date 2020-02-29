@@ -5,7 +5,7 @@
  * @format
  * @flow
  */
-
+import 'react-native-gesture-handler';
 import React, { Component } from 'react';
 import {
   SafeAreaView,
@@ -24,20 +24,36 @@ import {
   ReloadInstructions,
 } from 'react-native/Libraries/NewAppScreen';
 import SplashScreen from 'react-native-splash-screen';
+import { NavigationContainer } from '@react-navigation/native'
+import { createStackNavigator } from '@react-navigation/stack'
 
-class App extends Component {
+import Onboarding from './app/screens/Onboarding';
+import Banks from './app/screens/Banks';
+import Main from './app/screens/Main';
+
+
+type Props = {
+  info?: string
+}
+
+const Stack = createStackNavigator()
+class App extends Component<Props> {
   componentDidMount() {
     console.log(`Should hide Splashscreen here...`)
-    SplashScreen.hide()
+    SplashScreen.hide();
   }
-
 
   render() {
     return (
-      <View>
-        <Text>Hello There!!!</Text>
-      </View>
-    )
+      <NavigationContainer>
+        <Stack.Navigator>
+          <Stack.Screen name="Onboarding" component={Onboarding} options={{ headerShown: false }} />
+          <Stack.Screen name="Banks" component={Banks} options={{ headerShown: false }} />
+          <Stack.Screen name="Main" component={Main} options={{ headerShown: false }} />
+        </Stack.Navigator>
+      </NavigationContainer>
+      // <Onboarding />
+    );
   }
 }
 
