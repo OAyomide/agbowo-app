@@ -30,6 +30,7 @@ import { createStackNavigator } from '@react-navigation/stack'
 import Onboarding from './app/screens/Onboarding';
 import Banks from './app/screens/Banks';
 import Main from './app/screens/Main';
+import AsyncStorage from '@react-native-community/async-storage';
 
 
 type Props = {
@@ -38,8 +39,20 @@ type Props = {
 
 const Stack = createStackNavigator()
 class App extends Component<Props> {
-  componentDidMount() {
-    console.log(`Should hide Splashscreen here...`)
+  // $FlowFixMe
+  state = {
+    name: '',
+    isNewUser: true
+  }
+  async componentDidMount() {
+    // await AsyncStorage.removeItem('isNewUser')
+    let isNewUser = await AsyncStorage.getItem('isNewUser')
+    console.log(`Is new user: `, JSON.parse(isNewUser))
+    if (JSON.parse(isNewUser) === false) {
+      // $FlowFixMe
+      this.setState({ isNewUser: JSON.parse(isNewUser) })
+    }
+    // console.log(`Should hide Splashscreen here...`)
     SplashScreen.hide();
   }
 
@@ -47,7 +60,8 @@ class App extends Component<Props> {
     return (
       <NavigationContainer>
         <Stack.Navigator>
-          <Stack.Screen name="Onboarding" component={Onboarding} options={{ headerShown: false }} />
+          {/**$FlowFixMe */}
+          {this.state.isNewUser ? <Stack.Screen name="Onboarding" component={Onboarding} options={{ headerShown: false }} /> : <Stack.Screen name="MMain" component={Main} options={{ headerShown: false }} />}
           <Stack.Screen name="Banks" component={Banks} options={{ headerShown: false }} />
           <Stack.Screen name="Main" component={Main} options={{ headerShown: false }} />
         </Stack.Navigator>
@@ -57,13 +71,6 @@ class App extends Component<Props> {
   }
 }
 
-// const App: () => React$Node = () => {
-//   return (
-//     <View>
-//       <Text>HLLo World!</Text>
-//     </View>
-//   );
-// };
 
 const styles = StyleSheet.create({
   scrollView: {

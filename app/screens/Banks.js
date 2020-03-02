@@ -2,6 +2,9 @@ import React from 'react'
 import { View, ToastAndroid, TouchableOpacity, StyleSheet, StatusBar } from 'react-native'
 import { Card, Text, Button } from 'react-native-elements'
 import { Picker } from 'react-native'
+import { StackActions, CommonActions } from '@react-navigation/native'
+import AsyncStorage from '@react-native-community/async-storage'
+
 class Banks extends React.Component {
 
   state = {
@@ -49,9 +52,14 @@ class Banks extends React.Component {
           paddingLeft: 15,
           paddingRight: 15,
           marginTop: 10
-        }} onPress={() => {
+        }} onPress={async () => {
           ToastAndroid.show("We want to go to next screen.", ToastAndroid.SHORT)
-          this.props.navigation.navigate("Main")
+          await AsyncStorage.setItem('userBank', this.state.bank)
+          // this.props.navigation.navigate('Main')
+          this.props.navigation.dispatch(CommonActions.reset({
+            index: 0,
+            routes: [{ name: 'Main' }]
+          }))
         }} />
         {/* <TouchableOpacity style={styles.nextButton} onPress={ToastAndroid.show("Next up, Main Dash!!", ToastAndroid.SHORT)}></TouchableOpacity>
         <Text style={{ fontSize: 20, color: 'black' }}></Text> */}

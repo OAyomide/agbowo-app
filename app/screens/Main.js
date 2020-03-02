@@ -1,12 +1,15 @@
 import React from 'react'
 import { Card } from 'react-native-elements'
-import { View, Text, StyleSheet } from 'react-native'
+import { View, Text, StyleSheet, StatusBar } from 'react-native'
 
 class Main extends React.Component {
   state = {
 
   }
 
+  componentDidMount() {
+    StatusBar.setBackgroundColor('#1b1821')
+  }
   render() {
     return (
       <View style={styles.viewStyle}>
