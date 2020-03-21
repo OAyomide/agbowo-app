@@ -1,9 +1,11 @@
 import React from 'react'
 import { View, ToastAndroid, TouchableOpacity, StyleSheet, StatusBar } from 'react-native'
-import { Card, Text, Button } from 'react-native-elements'
+import { Card, Text, Button, Input } from 'react-native-elements'
 import { Picker } from 'react-native'
 import { StackActions, CommonActions } from '@react-navigation/native'
 import AsyncStorage from '@react-native-community/async-storage'
+import { Svg, Path } from 'react-native-svg'
+
 
 class Banks extends React.Component {
 
@@ -13,16 +15,41 @@ class Banks extends React.Component {
   }
 
   componentDidMount() {
-    StatusBar.setBackgroundColor('#1b1821')
+    StatusBar.setBackgroundColor('white')
+    StatusBar.setBarStyle('dark-content')
   }
   render() {
     return (
       <View style={styles.viewStyle}>
-        <Card
-          title="Select your bank" // TODO: support other banks apart from gtbank.
+        <Svg
+          xmlns="http://www.w3.org/2000/svg"
+          width="468"
+          height="253"
+          fill="none"
+          viewBox="0 0 468 253"
+        >
+          <Path
+            fill="#372F4A"
+            d="M459.601 111.839C31.204 326.518 8.671 271.596-5 111.839V-161h464.601s428.397 58.159 0 272.839z"
+          ></Path>
+        </Svg>
+        <View>
+          <Input placeholder="First name" />
+          <Input placeholder="Last name" />
+
+          <Input placeholder="Account number" keyboardType='numeric' maxLength={10} />
+
+          <Picker>
+            <Picker.Item label="Select your bank" value="" />
+            <Picker.Item label="GTBank" value="gtbank" />
+          </Picker>
+          <Button></Button>
+        </View>
+        {/* <Card
+          title="Let us know you" // TODO: support other banks apart from gtbank.
           containerStyle={{ backgroundColor: "#5450bf", marginTop: 300, borderColor: 'transparent', borderRadius: 25 }}
           titleStyle={{ color: 'white' }}>
-
+          <Text style={{ fontStyle: "normal" }}>What bank do you use?</Text>
           <Picker
             selectedValue={this.state.bank}
             style={{ height: 50, width: 300, color: 'white' }}
@@ -60,18 +87,19 @@ class Banks extends React.Component {
             index: 0,
             routes: [{ name: 'Main' }]
           }))
-        }} />
+        }} /> */}
         {/* <TouchableOpacity style={styles.nextButton} onPress={ToastAndroid.show("Next up, Main Dash!!", ToastAndroid.SHORT)}></TouchableOpacity>
         <Text style={{ fontSize: 20, color: 'black' }}></Text> */}
-      </View>
+      </View >
     )
   }
 }
 
 const styles = StyleSheet.create({
   viewStyle: {
-    backgroundColor: '#1b1821',
-    height: '100%'
+    backgroundColor: 'white',
+    height: '100%',
+    flex: 1
   },
   pickerStyle: {
     width: 100

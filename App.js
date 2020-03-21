@@ -27,8 +27,8 @@ import SplashScreen from 'react-native-splash-screen';
 import { NavigationContainer } from '@react-navigation/native'
 import { createStackNavigator } from '@react-navigation/stack'
 
-import Onboarding from './app/screens/Onboarding';
-import Banks from './app/screens/Banks';
+import Onboarding from './app/screens/onboarding/Onboarding';
+import UserDetails from './app/screens/onboarding/UserOnboardingDetails';
 import Main from './app/screens/Main';
 import AsyncStorage from '@react-native-community/async-storage';
 
@@ -45,7 +45,7 @@ class App extends Component<Props> {
     isNewUser: true
   }
   async componentDidMount() {
-    // await AsyncStorage.removeItem('isNewUser')
+    await AsyncStorage.removeItem('isNewUser')
     let isNewUser = await AsyncStorage.getItem('isNewUser')
     console.log(`Is new user: `, JSON.parse(isNewUser))
     if (JSON.parse(isNewUser) === false) {
@@ -62,7 +62,7 @@ class App extends Component<Props> {
         <Stack.Navigator>
           {/**$FlowFixMe */}
           {this.state.isNewUser ? <Stack.Screen name="Onboarding" component={Onboarding} options={{ headerShown: false }} /> : <Stack.Screen name="MMain" component={Main} options={{ headerShown: false }} />}
-          <Stack.Screen name="Banks" component={Banks} options={{ headerShown: false }} />
+          <Stack.Screen name="UserDetails" component={UserDetails} options={{ headerShown: false }} />
           <Stack.Screen name="Main" component={Main} options={{ headerShown: false }} />
         </Stack.Navigator>
       </NavigationContainer>
